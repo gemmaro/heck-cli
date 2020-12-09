@@ -25,7 +25,7 @@ fn main() {
         TargetCase::Title => input_string.to_title_case(),
     };
 
-    println!("{}", output_string);
+    print!("{}", output_string);
 }
 
 #[derive(Debug, StructOpt)]
