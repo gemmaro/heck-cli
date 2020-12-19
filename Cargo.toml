@@ -3,6 +3,7 @@ name = "heck-cli"
 version = "0.1.0"
 authors = ["gemmaro <gemmaro.dev@gmail.com>"]
 edition = "2018"
+license = "Apache-2.0 OR MIT"
 
 [dependencies]
 heck = "0.3.1"
