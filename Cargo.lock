@@ -54,6 +54,7 @@ dependencies = [
 name = "heck-cli"
 version = "0.1.0"
 dependencies = [
+ "clap",
  "heck",
  "structopt",
  "strum",

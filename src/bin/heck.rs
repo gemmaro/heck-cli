@@ -1,11 +1,16 @@
 use {
+    clap::arg_enum,
     heck::{CamelCase, KebabCase, MixedCase, ShoutySnakeCase, SnakeCase, TitleCase},
     std::io::{stdin, Read},
     structopt::StructOpt,
-    strum_macros::EnumString,
 };
 
 fn main() {
+    // NOTE: If help option is specified, show help message by structopt.
+    let target_case = Opt::from_args()
+        .target_case
+        .unwrap_or(TargetCase::default());
+
     let input_string = {
         let mut buf = String::new();
         stdin().read_to_string(&mut buf).unwrap();
@@ -13,36 +18,45 @@ fn main() {
         buf
     };
 
-    let output_string = match Opt::from_args()
-        .target_case
-        .unwrap_or(TargetCase::default())
-    {
-        TargetCase::Camel => input_string.to_camel_case(),
-        TargetCase::Kebab => input_string.to_kebab_case(),
-        TargetCase::Mixed => input_string.to_mixed_case(),
-        TargetCase::ShoutySnake => input_string.to_shouty_snake_case(),
-        TargetCase::Snake => input_string.to_snake_case(),
-        TargetCase::Title => input_string.to_title_case(),
-    };
+    let output_string = target_case.convert(&input_string);
 
     print!("{}", output_string);
 }
 
 #[derive(Debug, StructOpt)]
 struct Opt {
-    #[structopt(short = "t", long = "target-case")]
+    #[structopt(short = "t",
+                long = "target-case",
+                possible_values = &TargetCase::variants(),
+                case_insensitive = true)]
     target_case: Option<TargetCase>,
 }
 
-#[derive(Debug, EnumString)]
-#[strum(serialize_all = "kebab_case")]
-enum TargetCase {
-    Camel,
-    Kebab,
-    Mixed,
-    ShoutySnake,
-    Snake,
-    Title,
+arg_enum! {
+    #[derive(Debug)]
+    enum TargetCase {
+        Camel,
+        Kebab,
+        Mixed,
+        ShoutySnake,
+        Snake,
+        Title,
+    }
+}
+
+impl TargetCase {
+    fn convert(self, s: &str) -> String {
+        use TargetCase::*;
+
+        match self {
+            Camel => s.to_camel_case(),
+            Kebab => s.to_kebab_case(),
+            Mixed => s.to_mixed_case(),
+            ShoutySnake => s.to_shouty_snake_case(),
+            Snake => s.to_snake_case(),
+            Title => s.to_title_case(),
+        }
+    }
 }
 
 impl Default for TargetCase {

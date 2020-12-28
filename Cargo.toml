@@ -6,6 +6,7 @@ edition = "2018"
 license = "Apache-2.0 OR MIT"
 
 [dependencies]
+clap = "2.33.3"
 heck = "0.3.1"
 structopt = "0.3.21"
 strum = "0.20.0"
