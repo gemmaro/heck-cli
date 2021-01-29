@@ -5,19 +5,7 @@ use std::io::{stdin, Read};
 use {clap::arg_enum, structopt::StructOpt};
 
 fn main() {
-    // NOTE: If help option is specified, show help message and exit.
-    // This must be before `input_string()` call.
-    let target_case = target_case();
-
-    let output_string = target_case.convert(&input_string());
-
-    print!("{}", output_string);
-}
-
-fn target_case() -> TargetCase {
-    Opt::from_args()
-        .target_case
-        .unwrap_or(TargetCase::default())
+    print!("{}", Opt::from_args().target_case.convert(&input_string()));
 }
 
 fn input_string() -> String {
@@ -29,11 +17,14 @@ fn input_string() -> String {
 
 #[derive(Debug, StructOpt)]
 struct Opt {
+    /// Note that target case value is insensitive.
+    /// (e.g. `echo aaa bbb | heck -t shoutysnake`)
     #[structopt(short = "t",
                 long = "target-case",
                 possible_values = &TargetCase::variants(),
-                case_insensitive = true)]
-    target_case: Option<TargetCase>,
+                case_insensitive = true,
+                default_value)]
+    target_case: TargetCase,
 }
 
 arg_enum! {

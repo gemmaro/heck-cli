@@ -4,6 +4,7 @@ version = "0.1.1"
 authors = ["gemmaro <gemmaro.dev@gmail.com>"]
 edition = "2018"
 license = "Apache-2.0 OR MIT"
+publish = false
 
 [dependencies]
 clap = "2.33.3"
