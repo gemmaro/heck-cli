@@ -1,5 +1,7 @@
 # heck CLI
 
+This is a program that simply turns the `heck` crate into a Command Line Interface (CLI).
+
 ```shell-session
 $ echo 'This is a heck CLI' | heck
 this-is-a-heck-cli
@@ -13,8 +15,10 @@ $ heck -h # to show usage
 ## Install
 
 ```shell-session
-$ cargo install --git https://vcs.gemmaro.mydns.jp/git/gemmaro/heck-cli.git
+$ cargo install --git <GIT_URL>
 ```
+
+Not registered in crates.io.
 
 ## License
 
